@@ -16,5 +16,20 @@ namespace PasswordManager
         {
             InitializeComponent();
         }
+
+        private void btnNPlatform_Click(object sender, EventArgs e)
+        {
+            cboPlatform.Items.Add(rtxPlatform.Text);
+        }
+
+        private void btnAddAccount_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnRetrieveCreds_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
