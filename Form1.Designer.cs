@@ -40,7 +40,7 @@ namespace PasswordManager
             // cboPlatform
             // 
             this.cboPlatform.FormattingEnabled = true;
-            this.cboPlatform.Location = new System.Drawing.Point(12, 245);
+            this.cboPlatform.Location = new System.Drawing.Point(12, 190);
             this.cboPlatform.Name = "cboPlatform";
             this.cboPlatform.Size = new System.Drawing.Size(266, 24);
             this.cboPlatform.TabIndex = 0;
