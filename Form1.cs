@@ -13,15 +13,16 @@ namespace PasswordManager
 {
     public partial class Form1 : Form
     {
-        private string platformsPath = @"D:\Visual Studio\Projects\PasswordManager\Platforms.txt";
+        private string platformsPath = @"D:\Visual Studio\Projects\PasswordManager\Platforms";
         public Form1()
         {
             InitializeComponent();
-            ReadFile(platformsPath);
+            CreatePlatformsFolder(platformsPath);
+            DisplayFiles(platformsPath);
         }
 
         private void btnNPlatform_Click(object sender, EventArgs e)
-            => WriteToFile(rtxPlatform.Text, platformsPath);
+            => CreateFile(rtxPlatform.Text, platformsPath);
 
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
@@ -33,29 +34,32 @@ namespace PasswordManager
 
         }
 
-        private void ReadFile(string file)
+        private void DisplayFiles(string path)
         {
-            if (!File.Exists(file))
-                File.CreateText(file).Close();
-            else
-            {
-                string line;
-                using (var sr = new StreamReader(file))
-                    while ((line = sr.ReadLine()) != null)
-                        cboPlatform.Items.Add(line);
-            }
+            //Windows already arranges with alphabetical order.
+            cboPlatform.Items.Clear();
+            DirectoryInfo folder = new DirectoryInfo(path);
+            foreach (var file in folder.GetFiles("*"))
+                cboPlatform.Items.Add(file.ToString()
+                                          .Substring(0, file.ToString().Length - 4));
+        }
+        
+        private void CreatePlatformsFolder(string path)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
         }
 
-        private void WriteToFile(string content, string file)
+        private void CreateFile(string content, string file)
         {
-            if (!File.Exists(file))
-                File.CreateText(file).Close();
+            if (content.Any(c => !char.IsLetterOrDigit(c)) || content.Contains(" "))
+                MessageBox.Show("The platform you entered contains either " +
+                                "space or a special character.", "Wrong Input");
             else
             {
-                using (var sw = File.AppendText(file))
-                    sw.Write(content + Environment.NewLine);
-                cboPlatform.Items.Clear();
-                ReadFile(file);
+                if (!File.Exists(file + "\\" + content))  //Two backslashes inside double quotations
+                    File.CreateText($"{file}\\{content}.txt");  //to show one backslash.
+                DisplayFiles(file);
             }
         }
     }

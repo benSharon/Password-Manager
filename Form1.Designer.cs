@@ -31,7 +31,7 @@ namespace PasswordManager
         {
             this.cboPlatform = new System.Windows.Forms.ComboBox();
             this.btnNPlatform = new System.Windows.Forms.Button();
-            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.accList = new System.Windows.Forms.ListBox();
             this.btnAddAccount = new System.Windows.Forms.Button();
             this.btnRetrieveCreds = new System.Windows.Forms.Button();
             this.rtxPlatform = new System.Windows.Forms.RichTextBox();
@@ -43,7 +43,7 @@ namespace PasswordManager
             this.cboPlatform.Location = new System.Drawing.Point(12, 190);
             this.cboPlatform.Name = "cboPlatform";
             this.cboPlatform.Size = new System.Drawing.Size(266, 24);
-            this.cboPlatform.TabIndex = 0;
+            this.cboPlatform.TabIndex = 2;
             this.cboPlatform.Text = "Choose a platform...";
             // 
             // btnNPlatform
@@ -56,21 +56,21 @@ namespace PasswordManager
             this.btnNPlatform.UseVisualStyleBackColor = true;
             this.btnNPlatform.Click += new System.EventHandler(this.btnNPlatform_Click);
             // 
-            // listBox2
+            // accList
             // 
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 16;
-            this.listBox2.Location = new System.Drawing.Point(309, 137);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(275, 164);
-            this.listBox2.TabIndex = 2;
+            this.accList.FormattingEnabled = true;
+            this.accList.ItemHeight = 16;
+            this.accList.Location = new System.Drawing.Point(309, 137);
+            this.accList.Name = "accList";
+            this.accList.Size = new System.Drawing.Size(275, 164);
+            this.accList.TabIndex = 3;
             // 
             // btnAddAccount
             // 
             this.btnAddAccount.Location = new System.Drawing.Point(457, 325);
             this.btnAddAccount.Name = "btnAddAccount";
             this.btnAddAccount.Size = new System.Drawing.Size(127, 66);
-            this.btnAddAccount.TabIndex = 3;
+            this.btnAddAccount.TabIndex = 5;
             this.btnAddAccount.Text = "Add Account";
             this.btnAddAccount.UseVisualStyleBackColor = true;
             this.btnAddAccount.Click += new System.EventHandler(this.btnAddAccount_Click);
@@ -90,7 +90,7 @@ namespace PasswordManager
             this.rtxPlatform.Location = new System.Drawing.Point(12, 137);
             this.rtxPlatform.Name = "rtxPlatform";
             this.rtxPlatform.Size = new System.Drawing.Size(151, 24);
-            this.rtxPlatform.TabIndex = 5;
+            this.rtxPlatform.TabIndex = 0;
             this.rtxPlatform.Text = "";
             // 
             // Form1
@@ -99,7 +99,7 @@ namespace PasswordManager
             this.Controls.Add(this.rtxPlatform);
             this.Controls.Add(this.btnRetrieveCreds);
             this.Controls.Add(this.btnAddAccount);
-            this.Controls.Add(this.listBox2);
+            this.Controls.Add(this.accList);
             this.Controls.Add(this.btnNPlatform);
             this.Controls.Add(this.cboPlatform);
             this.Name = "Form1";
@@ -116,7 +116,7 @@ namespace PasswordManager
         private System.Windows.Forms.Button btnRetrieve;
         private System.Windows.Forms.ComboBox cboPlatform;
         private System.Windows.Forms.Button btnNPlatform;
-        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.ListBox accList;
         private System.Windows.Forms.Button btnAddAccount;
         private System.Windows.Forms.Button btnRetrieveCreds;
         private System.Windows.Forms.RichTextBox rtxPlatform;
