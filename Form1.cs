@@ -13,15 +13,14 @@ namespace PasswordManager
 {
     public partial class Form1 : Form
     {
-        private string platformsPath = @"D:\Visual Studio\Projects\PasswordManager\Platforms";
+        private string platformsPath = @"Platforms";
         public Form1()
         {
             InitializeComponent();
             CreatePlatformsFolder(platformsPath);
-            DisplayFiles(platformsPath);
         }
 
-        private void btnNPlatform_Click(object sender, EventArgs e)
+        private void btnNewPlatform_Click(object sender, EventArgs e)
             => CreateFile(rtxPlatform.Text, platformsPath);
 
         private void btnAddAccount_Click(object sender, EventArgs e)
@@ -48,18 +47,25 @@ namespace PasswordManager
         {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
+            else DisplayFiles(path);
         }
 
-        private void CreateFile(string content, string file)
+        private void CreateFile(string file, string path)
         {
-            if (content.Any(c => !char.IsLetterOrDigit(c)) || content.Contains(" "))
-                MessageBox.Show("The platform you entered contains either " +
-                                "space or a special character.", "Wrong Input");
+            if (file.Any(c => !char.IsLetterOrDigit(c)) || file.Contains(" ") ||
+                file == string.Empty)
+                MessageBox.Show($"Platform name cannot:{Environment.NewLine}" +
+                                $"- Contain a space.{Environment.NewLine}" +
+                                $"- Contain special characters.{Environment.NewLine}" +
+                                $"- Be empty.", "Wrong Input");
             else
-            {
-                if (!File.Exists(file + "\\" + content))  //Two backslashes inside double quotations
-                    File.CreateText($"{file}\\{content}.txt");  //to show one backslash.
-                DisplayFiles(file);
+            {   //Two backslashes inside double quotations to show one backslash.
+                if (!File.Exists(path + "\\" + file))
+                {                                      
+                    File.CreateText($"{path}\\{file}.txt");
+                    DisplayFiles(path);
+                }
+                else MessageBox.Show("File already exists.");
             }
         }
     }

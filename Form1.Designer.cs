@@ -30,7 +30,7 @@ namespace PasswordManager
         private void InitializeComponent()
         {
             this.cboPlatform = new System.Windows.Forms.ComboBox();
-            this.btnNPlatform = new System.Windows.Forms.Button();
+            this.btnNewPlatform = new System.Windows.Forms.Button();
             this.accList = new System.Windows.Forms.ListBox();
             this.btnAddAccount = new System.Windows.Forms.Button();
             this.btnRetrieveCreds = new System.Windows.Forms.Button();
@@ -46,15 +46,15 @@ namespace PasswordManager
             this.cboPlatform.TabIndex = 2;
             this.cboPlatform.Text = "Choose a platform...";
             // 
-            // btnNPlatform
+            // btnNewPlatform
             // 
-            this.btnNPlatform.Location = new System.Drawing.Point(174, 137);
-            this.btnNPlatform.Name = "btnNPlatform";
-            this.btnNPlatform.Size = new System.Drawing.Size(104, 24);
-            this.btnNPlatform.TabIndex = 1;
-            this.btnNPlatform.Text = "New Platform";
-            this.btnNPlatform.UseVisualStyleBackColor = true;
-            this.btnNPlatform.Click += new System.EventHandler(this.btnNPlatform_Click);
+            this.btnNewPlatform.Location = new System.Drawing.Point(174, 137);
+            this.btnNewPlatform.Name = "btnNewPlatform";
+            this.btnNewPlatform.Size = new System.Drawing.Size(104, 24);
+            this.btnNewPlatform.TabIndex = 1;
+            this.btnNewPlatform.Text = "New Platform";
+            this.btnNewPlatform.UseVisualStyleBackColor = true;
+            this.btnNewPlatform.Click += new System.EventHandler(this.btnNewPlatform_Click);
             // 
             // accList
             // 
@@ -100,7 +100,7 @@ namespace PasswordManager
             this.Controls.Add(this.btnRetrieveCreds);
             this.Controls.Add(this.btnAddAccount);
             this.Controls.Add(this.accList);
-            this.Controls.Add(this.btnNPlatform);
+            this.Controls.Add(this.btnNewPlatform);
             this.Controls.Add(this.cboPlatform);
             this.Name = "Form1";
             this.ResumeLayout(false);
@@ -110,12 +110,11 @@ namespace PasswordManager
         #endregion
 
         private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.Button btnNewPlatform;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnRetrieve;
         private System.Windows.Forms.ComboBox cboPlatform;
-        private System.Windows.Forms.Button btnNPlatform;
+        private System.Windows.Forms.Button btnNewPlatform;
         private System.Windows.Forms.ListBox accList;
         private System.Windows.Forms.Button btnAddAccount;
         private System.Windows.Forms.Button btnRetrieveCreds;
