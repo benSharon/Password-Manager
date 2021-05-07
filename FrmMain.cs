@@ -11,21 +11,31 @@ using System.Windows.Forms;
 
 namespace PasswordManager
 {
-    public partial class Form1 : Form
+    public partial class FrmMain : Form
     {
         private string platformsPath = @"Platforms";
-        public Form1()
+
+        public FrmMain()
         {
             InitializeComponent();
             CreatePlatformsFolder(platformsPath);
         }
 
+        private void cboPlatform_SelectedIndexChanged(object sender, EventArgs e)
+            => ReadFile(cboPlatform.SelectedItem.ToString(), platformsPath);
+
         private void btnNewPlatform_Click(object sender, EventArgs e)
-            => CreateFile(rtxPlatform.Text, platformsPath);
+            => CreatePlatformFile(rtxPlatform.Text, platformsPath);
 
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
-
+            if (cboPlatform.Text != "Choose a platform...")
+            {
+                //"this" refers to FrmMain.
+                FrmAccount secondForm = new FrmAccount(this);
+                secondForm.Show();
+            }
+            else MessageBox.Show("You need to select a platform in the drop-down menu.");
         }
 
         private void btnRetrieveCreds_Click(object sender, EventArgs e)
@@ -50,7 +60,7 @@ namespace PasswordManager
             else DisplayFiles(path);
         }
 
-        private void CreateFile(string file, string path)
+        private void CreatePlatformFile(string file, string path)
         {
             if (file.Any(c => !char.IsLetterOrDigit(c)) || file.Contains(" ") ||
                 file == string.Empty)
@@ -60,13 +70,30 @@ namespace PasswordManager
                                 $"- Be empty.", "Wrong Input");
             else
             {   //Two backslashes inside double quotations to show one backslash.
-                if (!File.Exists(path + "\\" + file))
-                {                                      
-                    File.CreateText($"{path}\\{file}.txt");
+                if (!File.Exists($"{path}\\{file}.txt"))
+                {
+                    File.Create($"{path}\\{file}.txt").Close();
+                    accList.Items.Clear();
+                    rtxPlatform.Clear();
                     DisplayFiles(path);
                 }
                 else MessageBox.Show("File already exists.");
             }
+        }
+
+        public void ReadFile(string file, string path)
+        {
+            accList.Items.Clear();
+            if (!File.Exists($"{path}\\{file}.txt"))
+                MessageBox.Show($"{file} file does not exist.");
+            else
+                using (var sr = File.OpenText($"{path}\\{file}.txt"))
+                {
+                    string line;
+                    while ((line = sr.ReadLine()) != null)
+                        accList.Items.Add(line);
+                    sr.Close();
+                }
         }
     }
 }
