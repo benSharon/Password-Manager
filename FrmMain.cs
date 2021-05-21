@@ -30,17 +30,16 @@ namespace PasswordManager
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
             if (cboPlatform.Text != "Choose a platform...")
-            {
-                //"this" refers to FrmMain.
-                FrmAccount secondForm = new FrmAccount(this);
-                secondForm.Show();
-            }
+                new FrmAccount(this).Show(); //"this" refers to FrmMain.
             else MessageBox.Show("You need to select a platform in the drop-down menu.");
         }
 
         private void btnRetrieveCreds_Click(object sender, EventArgs e)
         {
-
+            if (accList.SelectedItem == null)
+                MessageBox.Show("An account must be selected in order " +
+                                "to retrieve the accounts' credentials.");
+            else credList.Items.Add(accList.SelectedItem);
         }
 
         private void DisplayFiles(string path)
@@ -50,7 +49,8 @@ namespace PasswordManager
             DirectoryInfo folder = new DirectoryInfo(path);
             foreach (var file in folder.GetFiles("*"))
                 cboPlatform.Items.Add(file.ToString()
-                                          .Substring(0, file.ToString().Length - 4));
+                                          .Substring(0, file.ToString()
+                                                            .Length - 4));
         }
         
         private void CreatePlatformsFolder(string path)
@@ -72,7 +72,8 @@ namespace PasswordManager
             {   //Two backslashes inside double quotations to show one backslash.
                 if (!File.Exists($"{path}\\{file}.txt"))
                 {
-                    File.Create($"{path}\\{file}.txt").Close();
+                    File.Create($"{path}\\{file}.txt")
+                        .Close();
                     accList.Items.Clear();
                     rtxPlatform.Clear();
                     DisplayFiles(path);

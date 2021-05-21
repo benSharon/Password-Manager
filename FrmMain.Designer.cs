@@ -35,6 +35,7 @@ namespace PasswordManager
             this.btnAddAccount = new System.Windows.Forms.Button();
             this.btnRetrieveCreds = new System.Windows.Forms.Button();
             this.rtxPlatform = new System.Windows.Forms.RichTextBox();
+            this.credList = new System.Windows.Forms.ListBox();
             this.SuspendLayout();
             // 
             // cboPlatform
@@ -73,9 +74,9 @@ namespace PasswordManager
             // btnAddAccount
             // 
             this.btnAddAccount.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnAddAccount.Location = new System.Drawing.Point(310, 192);
+            this.btnAddAccount.Location = new System.Drawing.Point(310, 190);
             this.btnAddAccount.Name = "btnAddAccount";
-            this.btnAddAccount.Size = new System.Drawing.Size(127, 66);
+            this.btnAddAccount.Size = new System.Drawing.Size(127, 68);
             this.btnAddAccount.TabIndex = 4;
             this.btnAddAccount.Text = "Add Account";
             this.btnAddAccount.UseVisualStyleBackColor = true;
@@ -84,9 +85,9 @@ namespace PasswordManager
             // btnRetrieveCreds
             // 
             this.btnRetrieveCreds.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnRetrieveCreds.Location = new System.Drawing.Point(456, 192);
+            this.btnRetrieveCreds.Location = new System.Drawing.Point(456, 190);
             this.btnRetrieveCreds.Name = "btnRetrieveCreds";
-            this.btnRetrieveCreds.Size = new System.Drawing.Size(129, 66);
+            this.btnRetrieveCreds.Size = new System.Drawing.Size(129, 68);
             this.btnRetrieveCreds.TabIndex = 5;
             this.btnRetrieveCreds.Text = "Retrieve";
             this.btnRetrieveCreds.UseVisualStyleBackColor = true;
@@ -100,9 +101,19 @@ namespace PasswordManager
             this.rtxPlatform.TabIndex = 0;
             this.rtxPlatform.Text = "";
             // 
+            // credList
+            // 
+            this.credList.FormattingEnabled = true;
+            this.credList.ItemHeight = 16;
+            this.credList.Location = new System.Drawing.Point(20, 190);
+            this.credList.Name = "credList";
+            this.credList.Size = new System.Drawing.Size(258, 68);
+            this.credList.TabIndex = 6;
+            // 
             // FrmMain
             // 
             this.ClientSize = new System.Drawing.Size(616, 282);
+            this.Controls.Add(this.credList);
             this.Controls.Add(this.rtxPlatform);
             this.Controls.Add(this.btnRetrieveCreds);
             this.Controls.Add(this.btnAddAccount);
@@ -126,6 +137,7 @@ namespace PasswordManager
         private System.Windows.Forms.RichTextBox rtxPlatform;
         public System.Windows.Forms.ComboBox cboPlatform;
         public System.Windows.Forms.ListBox accList;
+        private System.Windows.Forms.ListBox credList;
     }
 }
 

@@ -36,7 +36,7 @@ namespace PasswordManager
             //the variable from Form1 to Form2.
             #endregion
             WriteToFile(selectedFile, platformsPath);
-            //Close(); //This is to close Form2 automatically.
+            //Close(); //This is to close FrmAccount automatically.
         }
 
         private void WriteToFile(string file, string path)
@@ -52,7 +52,7 @@ namespace PasswordManager
                     using (var sw = File.AppendText($"{path}\\{file}.txt"))
                     {
                         sw.Write($"{rtxEmailUsername.Text} ==> {rtxPassword.Text}" +
-                                                             $"{Environment.NewLine}");
+                                                            $"{Environment.NewLine}");
                         rtxEmailUsername.Clear();
                         rtxPassword.Clear();
                         rtxRetypePassword.Clear();
