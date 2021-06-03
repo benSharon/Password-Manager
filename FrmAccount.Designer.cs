@@ -40,7 +40,7 @@ namespace PasswordManager
             // 
             // rtxPassword
             // 
-            this.rtxPassword.Location = new System.Drawing.Point(157, 94);
+            this.rtxPassword.Location = new System.Drawing.Point(157, 95);
             this.rtxPassword.Name = "rtxPassword";
             this.rtxPassword.Size = new System.Drawing.Size(220, 31);
             this.rtxPassword.TabIndex = 2;
@@ -48,9 +48,9 @@ namespace PasswordManager
             // 
             // rtxRetypePassword
             // 
-            this.rtxRetypePassword.Location = new System.Drawing.Point(157, 148);
+            this.rtxRetypePassword.Location = new System.Drawing.Point(157, 145);
             this.rtxRetypePassword.Name = "rtxRetypePassword";
-            this.rtxRetypePassword.Size = new System.Drawing.Size(220, 28);
+            this.rtxRetypePassword.Size = new System.Drawing.Size(156, 31);
             this.rtxRetypePassword.TabIndex = 3;
             this.rtxRetypePassword.Text = "";
             // 
@@ -77,9 +77,9 @@ namespace PasswordManager
             // btnEnter
             // 
             this.btnEnter.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnEnter.Location = new System.Drawing.Point(394, 148);
+            this.btnEnter.Location = new System.Drawing.Point(319, 145);
             this.btnEnter.Name = "btnEnter";
-            this.btnEnter.Size = new System.Drawing.Size(86, 28);
+            this.btnEnter.Size = new System.Drawing.Size(58, 31);
             this.btnEnter.TabIndex = 4;
             this.btnEnter.Text = "Enter";
             this.btnEnter.UseVisualStyleBackColor = true;
@@ -103,7 +103,7 @@ namespace PasswordManager
             this.rtxEmailUsername.TabIndex = 1;
             this.rtxEmailUsername.Text = "";
             // 
-            // Form2
+            // FrmAccount
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -115,7 +115,7 @@ namespace PasswordManager
             this.Controls.Add(this.label1);
             this.Controls.Add(this.rtxRetypePassword);
             this.Controls.Add(this.rtxPassword);
-            this.Name = "Form2";
+            this.Name = "FrmAccount";
             this.Text = "Form2";
             this.ResumeLayout(false);
             this.PerformLayout();

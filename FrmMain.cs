@@ -14,6 +14,7 @@ namespace PasswordManager
     public partial class FrmMain : Form
     {
         private string platformsPath = @"Platforms";
+        private List<Account> accountList = new List<Account>();
 
         public FrmMain()
         {
@@ -34,13 +35,11 @@ namespace PasswordManager
             else MessageBox.Show("You need to select a platform in the drop-down menu.");
         }
 
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+            => DeleteFromFile(cboPlatform.SelectedItem.ToString(), platformsPath);
+
         private void btnRetrieveCreds_Click(object sender, EventArgs e)
-        {
-            if (accList.SelectedItem == null)
-                MessageBox.Show("An account must be selected in order " +
-                                "to retrieve the accounts' credentials.");
-            else credList.Items.Add(accList.SelectedItem);
-        }
+            => RetrieveCredentials(accList.SelectedItem.ToString());
 
         private void DisplayFiles(string path)
         {
@@ -74,11 +73,31 @@ namespace PasswordManager
                 {
                     File.Create($"{path}\\{file}.txt")
                         .Close();
+
                     accList.Items.Clear();
                     rtxPlatform.Clear();
                     DisplayFiles(path);
                 }
                 else MessageBox.Show("File already exists.");
+            }
+        }
+
+        private void DeleteFromFile(string file, string path)
+        {
+            if (accList.SelectedItem == null)
+                MessageBox.Show("An account must be selected for deletion.", "Error");
+            else
+            {
+                DialogResult confirmation = MessageBox.Show("Are you sure you want to delete the selected account ?", "Confirmation",
+                                                             MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+                if (confirmation == DialogResult.OK)
+                {
+                    File.WriteAllLines($"{path}\\{file}.txt",
+                    File.ReadAllLines($"{path}\\{file}.txt")
+                        .Where(account => account.Split(new string[] { " ==> " }, StringSplitOptions.None)[0]
+                                          != accList.SelectedItem.ToString()));
+                    ReadFile(file, path);
+                }
             }
         }
 
@@ -90,11 +109,29 @@ namespace PasswordManager
             else
                 using (var sr = File.OpenText($"{path}\\{file}.txt"))
                 {
+                    accountList.Clear();
                     string line;
                     while ((line = sr.ReadLine()) != null)
-                        accList.Items.Add(line);
+                    {
+                        string[] account = line.Split(new string[] { " ==> " }, StringSplitOptions.None);
+                        accountList.Add(new Account(account[0], account[1]));
+                        accList.Items.Add(account[0]);
+                    }
                     sr.Close();
                 }
+        }
+
+        private void RetrieveCredentials(string username)
+        {
+            if (accList.SelectedItem == null)
+                MessageBox.Show("An account must be selected in order " +
+                                "to retrieve the accounts' credentials.");
+            else
+            {
+                rtxUsername.Text = username;
+                rtxPassword.Text = accountList.FirstOrDefault(account => account.Username == username)
+                                              .Password;                              
+            }
         }
     }
 }

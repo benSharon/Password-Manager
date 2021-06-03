@@ -48,14 +48,16 @@ namespace PasswordManager
                 string errorMessage = CheckAccountError(rtxEmailUsername.Text,
                                                         rtxPassword.Text,
                                                         rtxRetypePassword.Text);
-                if (errorMessage == "")
+                if (errorMessage == string.Empty)
                     using (var sw = File.AppendText($"{path}\\{file}.txt"))
                     {
-                        sw.Write($"{rtxEmailUsername.Text} ==> {rtxPassword.Text}" +
-                                                            $"{Environment.NewLine}");
+                        sw.Write($"{rtxEmailUsername.Text.Trim()} ==> " +
+                                 $"{rtxPassword.Text.Trim()}{Environment.NewLine}");
+
                         rtxEmailUsername.Clear();
                         rtxPassword.Clear();
                         rtxRetypePassword.Clear();
+
                         sw.Close();
                         firstForm.ReadFile(file, path);
                     }
@@ -90,7 +92,7 @@ namespace PasswordManager
                 return $"Password did not match.{Environment.NewLine}" +
                        $"Please retype password.";
             }
-            return "";
+            return string.Empty;
         }
     }
 }
