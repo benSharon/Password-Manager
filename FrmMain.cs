@@ -14,12 +14,19 @@ namespace PasswordManager
     public partial class FrmMain : Form
     {
         private string platformsPath = @"Platforms";
+        private List<Account> accountList = new List<Account>();
 
         public FrmMain()
         {
             InitializeComponent();
             CreatePlatformsFolder(platformsPath);
         }
+
+        private void btnCopyUsername_Click(object sender, EventArgs e)
+            => Clipboard.SetText(rtxUsername.Text);
+
+        private void btnCopyPassword_Click(object sender, EventArgs e)
+            => Clipboard.SetText(rtxPassword.Text);
 
         private void cboPlatform_SelectedIndexChanged(object sender, EventArgs e)
             => ReadFile(cboPlatform.SelectedItem.ToString(), platformsPath);
@@ -30,17 +37,23 @@ namespace PasswordManager
         private void btnAddAccount_Click(object sender, EventArgs e)
         {
             if (cboPlatform.Text != "Choose a platform...")
-            {
-                //"this" refers to FrmMain.
-                FrmAccount secondForm = new FrmAccount(this);
-                secondForm.Show();
-            }
+                new FrmAccount(this).Show(); //"this" refers to FrmMain.
             else MessageBox.Show("You need to select a platform in the drop-down menu.");
+        }
+
+        private void btnDeleteAccount_Click(object sender, EventArgs e)
+        {
+            if (accList.SelectedItem == null || cboPlatform.SelectedItem == null)
+                MessageBox.Show("Select a platform first then select an account.", "Error");
+            else DeleteFromFile(cboPlatform.SelectedItem.ToString(), platformsPath);
         }
 
         private void btnRetrieveCreds_Click(object sender, EventArgs e)
         {
-
+            if (accList.SelectedItem == null)
+                MessageBox.Show("An account must be selected in order " +
+                                "to retrieve the accounts' credentials.");
+            else RetrieveCredentials(accList.SelectedItem.ToString());
         }
 
         private void DisplayFiles(string path)
@@ -50,7 +63,8 @@ namespace PasswordManager
             DirectoryInfo folder = new DirectoryInfo(path);
             foreach (var file in folder.GetFiles("*"))
                 cboPlatform.Items.Add(file.ToString()
-                                          .Substring(0, file.ToString().Length - 4));
+                                          .Substring(0, file.ToString()
+                                                            .Length - 4));
         }
         
         private void CreatePlatformsFolder(string path)
@@ -72,12 +86,29 @@ namespace PasswordManager
             {   //Two backslashes inside double quotations to show one backslash.
                 if (!File.Exists($"{path}\\{file}.txt"))
                 {
-                    File.Create($"{path}\\{file}.txt").Close();
+                    File.Create($"{path}\\{file}.txt")
+                        .Close();
+
                     accList.Items.Clear();
                     rtxPlatform.Clear();
                     DisplayFiles(path);
                 }
                 else MessageBox.Show("File already exists.");
+            }
+        }
+
+        private void DeleteFromFile(string file, string path)
+        {
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to delete this account ?", "Confirmation",
+                                                                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (confirmation == DialogResult.OK)
+            {
+                string fullPath = $"{path}\\{file}.txt";
+                string[] readAllLines = File.ReadAllLines(fullPath)
+                                            .Where(account => account.Split(new string[] { " ==> " }, StringSplitOptions.None)[0]
+                                                              != accList.SelectedItem.ToString()).ToArray();
+                File.WriteAllLines(fullPath, readAllLines);
+                ReadFile(file, path);
             }
         }
 
@@ -89,11 +120,23 @@ namespace PasswordManager
             else
                 using (var sr = File.OpenText($"{path}\\{file}.txt"))
                 {
+                    accountList.Clear();
                     string line;
                     while ((line = sr.ReadLine()) != null)
-                        accList.Items.Add(line);
+                    {
+                        string[] account = line.Split(new string[] { " ==> " }, StringSplitOptions.None);
+                        accountList.Add(new Account(account[0], account[1]));
+                        accList.Items.Add(account[0]);
+                    }
                     sr.Close();
                 }
+        }
+
+        private void RetrieveCredentials(string username)
+        {
+            rtxUsername.Text = username;
+            rtxPassword.Text = accountList.FirstOrDefault(account => account.Username == username)
+                                            .Password;
         }
     }
 }
