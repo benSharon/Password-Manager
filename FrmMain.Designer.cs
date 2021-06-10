@@ -132,6 +132,7 @@ namespace PasswordManager
             this.btnCopyUsername.TabIndex = 9;
             this.btnCopyUsername.Text = "Copy";
             this.btnCopyUsername.UseVisualStyleBackColor = true;
+            this.btnCopyUsername.Click += new System.EventHandler(this.btnCopyUsername_Click);
             // 
             // btnCopyPassword
             // 
@@ -141,6 +142,7 @@ namespace PasswordManager
             this.btnCopyPassword.TabIndex = 10;
             this.btnCopyPassword.Text = "Copy";
             this.btnCopyPassword.UseVisualStyleBackColor = true;
+            this.btnCopyPassword.Click += new System.EventHandler(this.btnCopyPassword_Click);
             // 
             // rtxPassword
             // 
@@ -172,10 +174,6 @@ namespace PasswordManager
 
         #endregion
 
-        private System.Windows.Forms.ComboBox comboBox1;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.Button btnAdd;
-        private System.Windows.Forms.Button btnRetrieve;
         private System.Windows.Forms.Button btnNewPlatform;
         private System.Windows.Forms.Button btnAddAccount;
         private System.Windows.Forms.Button btnRetrieveCreds;

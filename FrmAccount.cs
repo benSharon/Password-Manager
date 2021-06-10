@@ -45,9 +45,9 @@ namespace PasswordManager
                 MessageBox.Show($"{file} file does not exist.");
             else
             {
-                string errorMessage = CheckAccountError(rtxEmailUsername.Text,
-                                                        rtxPassword.Text,
-                                                        rtxRetypePassword.Text);
+                string errorMessage = CheckAccountError(rtxEmailUsername.Text.Trim(),
+                                                        rtxPassword.Text.Trim(),
+                                                        rtxRetypePassword.Text.Trim());
                 if (errorMessage == string.Empty)
                     using (var sw = File.AppendText($"{path}\\{file}.txt"))
                     {
@@ -68,9 +68,14 @@ namespace PasswordManager
         private string CheckAccountError(string username, string password, string passwordConfirmation)
         {
             //Email/Username cannot be empty.
-            if (username == string.Empty)
-                return $"Username cannot be empty.{Environment.NewLine}" +
+            if (username == string.Empty || username.Any(c => !char.IsSymbol(c)) || username.Contains(" "))
+            {
+                rtxEmailUsername.Clear();
+                return $"Username cannot: {Environment.NewLine}" +
+                       $"- Be empty.{Environment.NewLine}" +
+                       $"- Contain special characters and/or space.{Environment.NewLine}" +
                        $"Please re-enter username.";
+            }
             //If any of the password fields is empty.
             else if (password == string.Empty || passwordConfirmation == string.Empty)
                 return $"One of the 'password' field is empty.{Environment.NewLine}" +
@@ -78,14 +83,14 @@ namespace PasswordManager
             //Email/Username must be unique.
             else if (firstForm.accList.ToString()
                                       .Split(' ')
-                                      .Any(str => str == username))
+                                      .Any(str => str.Trim() == username.Trim()))
             {
                 rtxEmailUsername.Clear();
                 return $"Username already exists.{Environment.NewLine}" +
                        $"Please enter a different username.";
             }
             //If password fields do not match.
-            else if (password != passwordConfirmation)
+            else if (password.Trim() != passwordConfirmation.Trim())
             {
                 rtxPassword.Clear();
                 rtxRetypePassword.Clear();

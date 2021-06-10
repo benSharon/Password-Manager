@@ -22,6 +22,12 @@ namespace PasswordManager
             CreatePlatformsFolder(platformsPath);
         }
 
+        private void btnCopyUsername_Click(object sender, EventArgs e)
+            => Clipboard.SetText(rtxUsername.Text);
+
+        private void btnCopyPassword_Click(object sender, EventArgs e)
+            => Clipboard.SetText(rtxPassword.Text);
+
         private void cboPlatform_SelectedIndexChanged(object sender, EventArgs e)
             => ReadFile(cboPlatform.SelectedItem.ToString(), platformsPath);
 
@@ -36,10 +42,19 @@ namespace PasswordManager
         }
 
         private void btnDeleteAccount_Click(object sender, EventArgs e)
-            => DeleteFromFile(cboPlatform.SelectedItem.ToString(), platformsPath);
+        {
+            if (accList.SelectedItem == null || cboPlatform.SelectedItem == null)
+                MessageBox.Show("Select a platform first then select an account.", "Error");
+            else DeleteFromFile(cboPlatform.SelectedItem.ToString(), platformsPath);
+        }
 
         private void btnRetrieveCreds_Click(object sender, EventArgs e)
-            => RetrieveCredentials(accList.SelectedItem.ToString());
+        {
+            if (accList.SelectedItem == null)
+                MessageBox.Show("An account must be selected in order " +
+                                "to retrieve the accounts' credentials.");
+            else RetrieveCredentials(accList.SelectedItem.ToString());
+        }
 
         private void DisplayFiles(string path)
         {
@@ -84,20 +99,16 @@ namespace PasswordManager
 
         private void DeleteFromFile(string file, string path)
         {
-            if (accList.SelectedItem == null)
-                MessageBox.Show("An account must be selected for deletion.", "Error");
-            else
+            DialogResult confirmation = MessageBox.Show("Are you sure you want to delete this account ?", "Confirmation",
+                                                                 MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
+            if (confirmation == DialogResult.OK)
             {
-                DialogResult confirmation = MessageBox.Show("Are you sure you want to delete the selected account ?", "Confirmation",
-                                                             MessageBoxButtons.OKCancel, MessageBoxIcon.Information);
-                if (confirmation == DialogResult.OK)
-                {
-                    File.WriteAllLines($"{path}\\{file}.txt",
-                    File.ReadAllLines($"{path}\\{file}.txt")
-                        .Where(account => account.Split(new string[] { " ==> " }, StringSplitOptions.None)[0]
-                                          != accList.SelectedItem.ToString()));
-                    ReadFile(file, path);
-                }
+                string fullPath = $"{path}\\{file}.txt";
+                string[] readAllLines = File.ReadAllLines(fullPath)
+                                            .Where(account => account.Split(new string[] { " ==> " }, StringSplitOptions.None)[0]
+                                                              != accList.SelectedItem.ToString()).ToArray();
+                File.WriteAllLines(fullPath, readAllLines);
+                ReadFile(file, path);
             }
         }
 
@@ -123,15 +134,9 @@ namespace PasswordManager
 
         private void RetrieveCredentials(string username)
         {
-            if (accList.SelectedItem == null)
-                MessageBox.Show("An account must be selected in order " +
-                                "to retrieve the accounts' credentials.");
-            else
-            {
-                rtxUsername.Text = username;
-                rtxPassword.Text = accountList.FirstOrDefault(account => account.Username == username)
-                                              .Password;                              
-            }
+            rtxUsername.Text = username;
+            rtxPassword.Text = accountList.FirstOrDefault(account => account.Username == username)
+                                            .Password;
         }
     }
 }

@@ -123,13 +123,12 @@ namespace PasswordManager
         }
 
         #endregion
-
-        private System.Windows.Forms.RichTextBox rtxPassword;
         private System.Windows.Forms.RichTextBox rtxRetypePassword;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnEnter;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.RichTextBox rtxEmailUsername;
+        public System.Windows.Forms.RichTextBox rtxPassword;
+        public System.Windows.Forms.RichTextBox rtxEmailUsername;
     }
 }
